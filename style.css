@@ -1,0 +1,54 @@
+body {
+  background-color: #000000;
+  color: #ffffff;
+  font-family: arial, helvetica, verdana;
+  font-size: 20px;
+  padding: 0px;
+  margin: 0px;
+  /* Hide scrollbar */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+
+.cell {
+  line-height: 1.1;
+}
+
+.minutes_left {
+  text-align: right;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.actual_departure_time {
+  color: #c824e9;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.scheduled_departure_time {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.direction {
+  padding-left: 10px;
+  padding-right: 0px;
+}
+
+#current_time {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#head {
+  display: flex;
+  justify-content: space-between;
+}
