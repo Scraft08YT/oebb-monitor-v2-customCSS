@@ -26,6 +26,7 @@ var show_clock = false;
 var show_header = false;
 var show_line = false;
 var show_direction = true;
+var font_size;
 // #endregion
 
 // #region Read URL parameters */
@@ -107,8 +108,10 @@ window.addEventListener("load", (event) => {
   if (show_direction == false) {
     document.styleSheets[0].insertRule(".direction { display: none; }", 0);
   }
+  if (font_size !== undefined) {
+    document.body.style.setProperty("font-size", font_size);
+  }
 
-  document.body.style.setProperty("font-size", font_size);
   document.getElementById("current_time").innerHTML = "";
 
   if (!urlParams.has("departure_station")) {
