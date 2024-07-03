@@ -1,8 +1,10 @@
+# oebb-monitor-v2
+
 This monitor shows you the departure times of your public transportation station.
 
 Open the monitor: [OEBB Monitor v2](https://dave2ooo.github.io/oebb-monitor-v2/?departure_station=1290401&show_line=true&show_clock=false&show_header=true)
 
-## Personalize your Monitor
+# Personalize your Monitor
 You can modify the ÖBB monitor by adding parameters to the URL in the Webpage card.
  
 The following example URL updates data from Scotty every **60 seconds** and shows you the next **7 connections** from **Wien Hbf** to **Wien Floridsdorf Bahnhof** that departure in after **5 minutes** from now.
@@ -30,4 +32,6 @@ These are the parameters you can set.
 | update_interval | Updates the data every X second(s) (default: 30) |
 | show_clock | If "true", displays the current time (default: false) |
 | show_header | If "true", displays the table header (default: false) |
-| show_line | If "true", displays the transportation line |
+| show_line | If "true", displays the transportation line (defaut: false) |
+| show_direction | If "false", hides the direction (default: true) |
+| font_size | Font size of every element using CSS units e.g. 20px, 1.5rem (default: 20px) |
