@@ -10,6 +10,8 @@ update_interval (optional) ... Updates the data every X second(s) (default: 30)
 show_clock (optional) ... if true: displays a digital clock
 show_header (optional) ... if true: displays the table header
 show_line (optional) ... if true: displays the name of the line
+show_direction (optional) ... if false: hides the terminal station
+font_size (optional) ... defines the font size of every element
 */
 
 // #region Set default parameters
@@ -23,6 +25,7 @@ var update_interval = 30000;
 var show_clock = false;
 var show_header = false;
 var show_line = false;
+var show_direction = true;
 // #endregion
 
 // #region Read URL parameters */
@@ -62,6 +65,14 @@ if (urlParams.has("show_line")) {
     show_line = true;
   }
 }
+if (urlParams.has("show_direction")) {
+  if (urlParams.get("show_direction") == "false") {
+    show_direction = false;
+  }
+}
+if (urlParams.has("font_size")) {
+  font_size = urlParams.get("font_size");
+}
 // #endregion
 
 const url_scotty =
@@ -91,6 +102,29 @@ var loadedFlag = false;
 
 var last_response = "";
 var last_minutes = "";
+
+window.addEventListener("load", (event) => {
+  if (show_direction == false) {
+    document.styleSheets[0].insertRule(".direction { display: none; }", 0);
+  }
+
+  document.body.style.setProperty("font-size", font_size);
+  document.getElementById("current_time").innerHTML = "";
+
+  if (!urlParams.has("departure_station")) {
+    document.getElementById("current_time").innerHTML = error_msg_departure_station_missing;
+    console.error(error_msg_departure_station_missing);
+    return;
+  }
+  if (departure_station == "<YOUR_STATION_ID>") {
+    document.getElementById("current_time").innerHTML = error_msg_departure_station_not_edited;
+    console.error(error_msg_departure_station_not_edited);
+    return;
+  }
+
+  setInterval(GetLatestTime, 5000);
+  CallAPI();
+});
 
 function pollForJourneysObj() {
   if (typeof journeysObj === "undefined") {
@@ -179,8 +213,8 @@ function UpdateTable(response) {
     headerRow.appendChild(headerCell0);
     headerRow.appendChild(headerCell1);
     headerRow.appendChild(headerCell2);
-    headerRow.appendChild(headerCell3);
-    headerRow.appendChild(headerCell4);
+    if (show_line) headerRow.appendChild(headerCell3);
+    if (show_direction) headerRow.appendChild(headerCell4);
     headerRow.classList.add("header");
     tableBody.appendChild(headerRow);
     table.appendChild(tableBody);
@@ -188,7 +222,7 @@ function UpdateTable(response) {
     headerCell0.innerHTML = "Dep";
     headerCell1.innerHTML = "Current";
     headerCell2.innerHTML = "Time";
-    if (show_line) headerCell3.innerHTML = "Line";
+    headerCell3.innerHTML = "Line";
     headerCell4.innerHTML = "To";
   }
 
@@ -210,7 +244,7 @@ function UpdateTable(response) {
     dataRow.appendChild(dataCell0);
     dataRow.appendChild(dataCell1);
     dataRow.appendChild(dataCell2);
-    dataRow.appendChild(dataCell3);
+    if (show_line) dataRow.appendChild(dataCell3);
     dataRow.appendChild(dataCell4);
     dataRow.classList.add("row");
     dataCell0.classList.add("cell", "minutes_left");
@@ -241,7 +275,7 @@ function UpdateTable(response) {
     }
     dataCell0.innerHTML = minutes_left;
     dataCell2.innerHTML = scheduled_departure_time;
-    if (show_line) dataCell3.innerHTML = line;
+    dataCell3.innerHTML = line;
     dataCell4.innerHTML = direction;
   }
   // Delete old table
@@ -264,21 +298,3 @@ function GetLatestTime() {
     last_minutes = _current_minutes;
   }
 }
-
-window.addEventListener("load", (event) => {
-  document.getElementById("current_time").innerHTML = "";
-
-  if (!urlParams.has("departure_station")) {
-    document.getElementById("current_time").innerHTML = error_msg_departure_station_missing;
-    console.error(error_msg_departure_station_missing);
-    return;
-  }
-  if (departure_station == "<YOUR_STATION_ID>") {
-    document.getElementById("current_time").innerHTML = error_msg_departure_station_not_edited;
-    console.error(error_msg_departure_station_not_edited);
-    return;
-  }
-
-  setInterval(GetLatestTime, 5000);
-  CallAPI();
-});
