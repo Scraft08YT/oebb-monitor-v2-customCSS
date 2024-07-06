@@ -213,6 +213,11 @@ function UpdateTable(response) {
     var headerCell2 = document.createElement("th");
     var headerCell3 = document.createElement("th");
     var headerCell4 = document.createElement("th");
+    headerCell0.classList.add("minutes-left");
+    headerCell1.classList.add("actual-departure-time");
+    headerCell2.classList.add("scheduled-departure-time");
+    headerCell3.classList.add("line");
+    headerCell4.classList.add("direction");
     headerRow.appendChild(headerCell0);
     headerRow.appendChild(headerCell1);
     headerRow.appendChild(headerCell2);
@@ -250,9 +255,9 @@ function UpdateTable(response) {
     if (show_line) dataRow.appendChild(dataCell3);
     dataRow.appendChild(dataCell4);
     dataRow.classList.add("row");
-    dataCell0.classList.add("cell", "minutes_left");
-    dataCell1.classList.add("cell", "actual_departure_time");
-    dataCell2.classList.add("cell", "scheduled_departure_time");
+    dataCell0.classList.add("cell", "minutes-left");
+    dataCell1.classList.add("cell", "actual-departure-time");
+    dataCell2.classList.add("cell", "scheduled-departure-time");
     dataCell3.classList.add("cell", "line");
     dataCell4.classList.add("cell", "direction");
     tableBody.appendChild(dataRow);
