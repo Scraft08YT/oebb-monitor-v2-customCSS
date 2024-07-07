@@ -34,4 +34,4 @@ These are the parameters you can set.
 | show_header | If "true", displays the table header (default: false) |
 | show_line | If "true", displays the transportation line (defaut: false) |
 | show_direction | If "false", hides the direction (default: true) |
-| font_size | Font size of every element using CSS units e.g. 20px, 1.5rem (default: 20px) |
+| font_size | Font size of every element using CSS units e.g. 20px, 1.5rem (default: 3vw) |
