@@ -77,6 +77,11 @@ td.direction {
   /*width: 41%; */ /* Set width for column 5 */
 }
 
+th.platform,
+td.platform {
+  width: 10%; /* Set width for column 4 */
+}
+
 th {
   background: hsl(0 0% 0% / 0.5); /* Set background color of the table heading */
 }

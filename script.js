@@ -26,6 +26,7 @@ var show_clock = false;
 var show_header = false;
 var show_line = false;
 var show_direction = true;
+var show_platform = false;
 var font_size;
 // #endregion
 
@@ -69,6 +70,11 @@ if (urlParams.has("show_line")) {
 if (urlParams.has("show_direction")) {
   if (urlParams.get("show_direction") == "false") {
     show_direction = false;
+  }
+}
+if (urlParams.has("show_platform")) {
+  if (urlParams.get("show_platform") == "true") {
+    show_platform = true;
   }
 }
 if (urlParams.has("font_size")) {
@@ -142,6 +148,7 @@ function pollForJourneysObj() {
   if (journeysObj != last_response) {
     UpdateTable(journeysObj);
     last_response = journeysObj;
+    // console.log(journeysObj);
   }
 
   journeysObj = undefined;
@@ -213,16 +220,19 @@ function UpdateTable(response) {
     var headerCell2 = document.createElement("th");
     var headerCell3 = document.createElement("th");
     var headerCell4 = document.createElement("th");
+    var headerCell5 = document.createElement("th");
     headerCell0.classList.add("minutes-left");
     headerCell1.classList.add("actual-departure-time");
     headerCell2.classList.add("scheduled-departure-time");
     headerCell3.classList.add("line");
     headerCell4.classList.add("direction");
+    headerCell5.classList.add("platform");
     headerRow.appendChild(headerCell0);
     headerRow.appendChild(headerCell1);
     headerRow.appendChild(headerCell2);
     if (show_line) headerRow.appendChild(headerCell3);
     if (show_direction) headerRow.appendChild(headerCell4);
+    if (show_platform) headerRow.appendChild(headerCell5);
     headerRow.classList.add("header");
     tableBody.appendChild(headerRow);
     table.appendChild(tableBody);
@@ -232,6 +242,7 @@ function UpdateTable(response) {
     headerCell2.innerHTML = "Time";
     headerCell3.innerHTML = "Line";
     headerCell4.innerHTML = "To";
+    headerCell5.innerHTML = "Pt.";
   }
 
   for (let i = 0; i < num_journeys; i++) {
@@ -241,6 +252,7 @@ function UpdateTable(response) {
     const status = json_data.journey[i].rt.status;
     const line = json_data.journey[i].pr;
     const direction = json_data.journey[i].st;
+    const platform = json_data.journey[i].tr;
 
     // Table
     var dataRow = document.createElement("tr");
@@ -249,17 +261,20 @@ function UpdateTable(response) {
     var dataCell2 = document.createElement("td");
     var dataCell3 = document.createElement("td");
     var dataCell4 = document.createElement("td");
+    var dataCell5 = document.createElement("td");
     dataRow.appendChild(dataCell0);
     dataRow.appendChild(dataCell1);
     dataRow.appendChild(dataCell2);
     if (show_line) dataRow.appendChild(dataCell3);
     dataRow.appendChild(dataCell4);
+    if (show_platform) dataRow.appendChild(dataCell5);
     dataRow.classList.add("row");
     dataCell0.classList.add("cell", "minutes-left");
     dataCell1.classList.add("cell", "actual-departure-time");
     dataCell2.classList.add("cell", "scheduled-departure-time");
     dataCell3.classList.add("cell", "line");
     dataCell4.classList.add("cell", "direction");
+    dataCell5.classList.add("cell", "platform");
     tableBody.appendChild(dataRow);
     table.appendChild(tableBody);
 
@@ -271,6 +286,7 @@ function UpdateTable(response) {
         dataCell2.style.textDecoration = "line-through solid";
         dataCell3.style.textDecoration = "line-through solid";
         dataCell4.style.textDecoration = "line-through solid";
+        dataCell5.style.textDecoration = "line-through solid";
         minutes_left = CalculateTimeLeft(scheduled_departure_time);
       } else {
         // Train late
@@ -285,6 +301,7 @@ function UpdateTable(response) {
     dataCell2.innerHTML = scheduled_departure_time;
     dataCell3.innerHTML = line;
     dataCell4.innerHTML = direction;
+    dataCell5.innerHTML = platform;
   }
   // Delete old table
   const myTable = document.getElementById("table");
