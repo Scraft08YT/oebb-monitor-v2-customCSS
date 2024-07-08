@@ -28,6 +28,7 @@ var show_line = false;
 var show_direction = true;
 var show_platform = false;
 var font_size;
+var eq_stops = false;
 // #endregion
 
 // #region Read URL parameters */
@@ -80,10 +81,14 @@ if (urlParams.has("show_platform")) {
 if (urlParams.has("font_size")) {
   font_size = urlParams.get("font_size");
 }
+if (urlParams.has("eq_stops")) {
+  eq_stops = urlParams.get("eq_stops");
+}
 // #endregion
 
 const url_scotty =
-  "https://fahrplan.oebb.at/bin/stboard.exe/dn?L=vs_scotty.vs_liveticker&boardType=dep&tickerID=dep&start=yes&eqstops=true" +
+  "https://fahrplan.oebb.at/bin/stboard.exe/dn?L=vs_scotty.vs_liveticker&boardType=dep&tickerID=dep&start=yes&eqstops=" +
+  eq_stops +
   "&evaId=" +
   departure_station +
   "&dirInput=" +
