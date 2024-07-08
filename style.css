@@ -21,14 +21,19 @@
   line-height: 1.1;
 } */
 
+:root {
+  --background-color: #323232;
+  --font-color: white;
+}
+
 html,
 body {
   height: 100%;
   margin: 0;
   padding: 0;
   font-size: 3vw; /* Set base font size to a larger percentage of viewport width */
-  background-color: #000; /* Set background color of the body to black */
-  color: #fff; /* Set text color to white */
+  background-color: var(--background-color); /* Set background color of the body to black */
+  color: var(--font-color); /* Set text color to white */
   font-family: Arial, Helvetica, Verdana; /* Set font family */
 }
 
@@ -36,7 +41,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed; /* Ensures cells are of equal width */
-  background-color: #323232; /* Set background color of the table */
+  background-color: var(--background-color); /* Set background color of the table */
 }
 
 th,
@@ -44,7 +49,7 @@ td {
   text-align: left; /* Align text to the left in all cells, including headers */
   box-sizing: border-box; /* Includes padding and border in the element's total width and height */
   font-size: 1em; /* Use the base font size defined in html, body */
-  color: #fff; /* Set text color to white */
+  color: var(--font-color); /* Set text color to white */
   border-right: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border between columns */
   padding-left: 5px; /* Add left padding */
   padding-right: 5px; /* Add right padding */

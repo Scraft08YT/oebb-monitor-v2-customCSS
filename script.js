@@ -29,6 +29,8 @@ var show_direction = true;
 var show_platform = false;
 var font_size;
 var eq_stops = false;
+var background_color;
+var font_color;
 // #endregion
 
 // #region Read URL parameters */
@@ -84,6 +86,12 @@ if (urlParams.has("font_size")) {
 if (urlParams.has("eq_stops")) {
   eq_stops = urlParams.get("eq_stops");
 }
+if (urlParams.has("background_color")) {
+  background_color = urlParams.get("background_color");
+}
+if (urlParams.has("font_color")) {
+  font_color = urlParams.get("font_color");
+}
 // #endregion
 
 const url_scotty =
@@ -115,13 +123,15 @@ var loadedFlag = false;
 var last_response = "";
 var last_minutes = "";
 
+var root = document.querySelector(":root");
+
 window.addEventListener("load", (event) => {
-  if (show_direction == false) {
-    document.styleSheets[0].insertRule(".direction { display: none; }", 0);
-  }
-  if (font_size !== undefined) {
-    document.body.style.setProperty("font-size", font_size);
-  }
+  if (show_direction == false) document.styleSheets[0].insertRule(".direction { display: none; }", 0);
+
+  if (font_size !== undefined) document.body.style.setProperty("font-size", font_size);
+
+  if (background_color !== undefined) root.style.setProperty("--background-color", background_color);
+  if (font_color !== undefined) root.style.setProperty("--font-color", font_color);
 
   document.getElementById("current_time").innerHTML = "";
 
