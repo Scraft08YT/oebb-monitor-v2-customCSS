@@ -36,3 +36,4 @@ These are the parameters you can set.
 | show_direction | If "false", hides the direction (default: true) |
 | show_platform | If "true", shows the platform (default: false) |
 | font_size | Font size of every element using CSS units e.g. 20px, 1.5rem (default: 3vw) |
+| eq_stops | true / false, I don't know what it does (default: false) |
