@@ -130,8 +130,8 @@ window.addEventListener("load", (event) => {
 
   if (font_size !== undefined) document.body.style.setProperty("font-size", font_size);
 
-  if (background_color !== undefined) root.style.setProperty("--background-color", background_color);
-  if (font_color !== undefined) root.style.setProperty("--font-color", font_color);
+  if (background_color !== undefined) root.style.setProperty("--background-color", ConvertHEX(background_color));
+  if (font_color !== undefined) root.style.setProperty("--font-color", ConvertHEX(font_color));
 
   document.getElementById("current_time").innerHTML = "";
 
@@ -336,5 +336,14 @@ function GetLatestTime() {
     // console.log(last_response);
     UpdateTable(last_response);
     last_minutes = _current_minutes;
+  }
+}
+
+function ConvertHEX(input) {
+  const regex = /^[0-9A-Fa-f]{6}$/;
+  if (regex.test(input)) {
+    return "#" + input;
+  } else {
+    return input;
   }
 }
