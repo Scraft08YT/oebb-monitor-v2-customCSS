@@ -258,11 +258,16 @@ function UpdateTable(response) {
     tableBody.appendChild(headerRow);
     table.appendChild(tableBody);
 
-    headerCell0.innerHTML = "Dep";
+    if (board_type == "dep") {
+      headerCell0.innerHTML = "Dep";
+      headerCell4.innerHTML = "To";
+    } else {
+      headerCell0.innerHTML = "Arr";
+      headerCell4.innerHTML = "From";
+    }
     headerCell1.innerHTML = "Current";
     headerCell2.innerHTML = "Time";
     headerCell3.innerHTML = "Line";
-    headerCell4.innerHTML = "To";
     headerCell5.innerHTML = "Pt.";
   }
 
