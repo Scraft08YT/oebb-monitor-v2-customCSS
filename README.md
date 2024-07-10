@@ -28,6 +28,7 @@ These are the parameters you can set.
 | departure_station (required) | ID of the departure station. |
 | destination_station | ID of the destination station. If provided, the monitor only shows connections from your departure station to your destination station. |
 | products_filter | Filtering the means of transportation (Train, Bus,...) |
+| board_type | ("dep" or "arr") Selects between showing departure or arrival times (default: dep) |
 | num_journeys | Number of connections to show (default: 6) |
 | additional_time | Lead time in minutes (default: 0) |
 | update_interval | Updates the data every X second(s) (default: 30) |
