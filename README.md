@@ -33,7 +33,7 @@ These are the parameters you can set.
 | additional_time | Lead time in minutes (default: 0) |
 | update_interval | Updates the data every X second(s) (default: 30) |
 | show_clock | If "true", displays the current time (default: false) |
-| show_header | If "true", displays the table header (default: false) |
+| show_header | If "false", displays the table header (default: true) |
 | show_line | If "true", displays the transportation line (defaut: false) |
 | show_direction | If "false", hides the direction (default: true) |
 | show_platform | If "true", shows the platform (default: false) |
