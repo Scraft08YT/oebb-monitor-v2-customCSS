@@ -23,7 +23,7 @@ var set_num_journeys = 6;
 var set_additional_time = 0; // minutes
 var update_interval = 30000;
 var show_clock = false;
-var show_header = false;
+var show_header = true;
 var show_line = false;
 var show_direction = true;
 var show_platform = false;
@@ -62,8 +62,8 @@ if (urlParams.has("show_clock")) {
   }
 }
 if (urlParams.has("show_header")) {
-  if (urlParams.get("show_header") == "true") {
-    show_header = true;
+  if (urlParams.get("show_header") == "false") {
+    show_header = false;
   }
 }
 if (urlParams.has("show_line")) {
