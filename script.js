@@ -31,6 +31,7 @@ var font_size;
 var eq_stops = false;
 var background_color;
 var font_color;
+var board_type = "dep";
 // #endregion
 
 // #region Read URL parameters */
@@ -92,10 +93,13 @@ if (urlParams.has("background_color")) {
 if (urlParams.has("font_color")) {
   font_color = urlParams.get("font_color");
 }
+if (urlParams.has("board_type")) {
+  board_type = urlParams.get("board_type");
+}
 // #endregion
 
 const url_scotty =
-  "https://fahrplan.oebb.at/bin/stboard.exe/dn?L=vs_scotty.vs_liveticker&boardType=dep&tickerID=dep&start=yes&eqstops=" +
+  "https://fahrplan.oebb.at/bin/stboard.exe/dn?L=vs_scotty.vs_liveticker&tickerID=dep&start=yes&eqstops=" +
   eq_stops +
   "&evaId=" +
   departure_station +
@@ -109,6 +113,8 @@ const url_scotty =
   set_additional_time +
   "&productsFilter=" +
   products_filter +
+  "&boardType=" +
+  board_type +
   "&outputMode=tickerDataOnly";
 
 const error_msg_departure_station_missing =
