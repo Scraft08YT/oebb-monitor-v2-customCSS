@@ -222,7 +222,6 @@ function GetCurrentTimeInHH_MMFormat() {
 function UpdateTable(response) {
   json_data = response;
   // Use JSON data
-  console.log(json_data.journey);
   if (json_data.journey == undefined) {
     document.getElementById("current_time").innerHTML = error_msg_no_journeys;
     return;
