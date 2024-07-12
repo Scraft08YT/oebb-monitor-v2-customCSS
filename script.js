@@ -15,7 +15,6 @@ font_size (optional) ... defines the font size of every element
 */
 
 // #region Set default parameters
-var hass_ip = "X.X.X.X"; // example 192.168.1.169
 var departure_station;
 var destination_station = "";
 var products_filter = 1011111111011;
@@ -98,6 +97,7 @@ if (urlParams.has("board_type")) {
 }
 // #endregion
 
+// #region Variables
 const url_scotty =
   "https://fahrplan.oebb.at/bin/stboard.exe/dn?L=vs_scotty.vs_liveticker&tickerID=dep&start=yes&eqstops=" +
   eq_stops +
@@ -122,7 +122,7 @@ const error_msg_departure_station_missing =
 
 const error_msg_departure_station_not_edited = "Change &ltYOUR_STATION_ID&gt to your ÖBB station ID in the URL";
 
-const error_msg_no_journeys = "No journeys found. Check if station ID is correct";
+const error_msg_no_journeys = "No journeys found";
 
 var loadedFlag = false;
 
@@ -130,6 +130,7 @@ var last_response = "";
 var last_minutes = "";
 
 var root = document.querySelector(":root");
+// #endregion
 
 window.addEventListener("load", (event) => {
   if (show_direction == false) document.styleSheets[0].insertRule(".direction { display: none; }", 0);
@@ -221,6 +222,11 @@ function GetCurrentTimeInHH_MMFormat() {
 function UpdateTable(response) {
   json_data = response;
   // Use JSON data
+  console.log(json_data.journey);
+  if (json_data.journey == undefined) {
+    document.getElementById("current_time").innerHTML = error_msg_no_journeys;
+    return;
+  }
   const num_journeys = json_data.journey.length;
 
   if (show_clock == true) {
