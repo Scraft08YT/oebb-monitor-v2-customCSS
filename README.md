@@ -38,5 +38,5 @@ These are the parameters you can set.
 | show_direction | If "false", hides the direction (default: true) |
 | show_platform | If "true", shows the platform (default: false) |
 | font_size | Font size of every element using CSS units e.g. 20px, 1.5rem (default: 3vw) |
-| background_color | Sets the background color of the monitor (defualt: #323232) |
-| font_color | Sets the font color of the monitor (defualt: white) |
+| background_color | Sets the background color of the monitor (default: #323232) |
+| font_color | Sets the font color of the monitor (default: white) |
