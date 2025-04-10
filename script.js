@@ -221,126 +221,67 @@ function GetCurrentTimeInHH_MMFormat() {
 
 function UpdateTable(response) {
   json_data = response;
-  // Use JSON data
-  if (json_data.journey == undefined) {
+  if (!json_data.journey) {
     document.getElementById("current_time").innerHTML = error_msg_no_journeys;
     return;
   }
+
   const num_journeys = json_data.journey.length;
 
-  if (show_clock == true) {
+  if (show_clock) {
     document.getElementById("current_time").innerHTML = GetCurrentTimeInHH_MMFormat();
   }
-  // create table element
-  var table = document.createElement("table");
-  table.setAttribute("id", "table");
 
-  // create table body with data rows
-  var tableBody = document.createElement("tbody");
-
-  // Table Header
-  if (show_header) {
-    var headerRow = document.createElement("tr");
-    var headerCell0 = document.createElement("th");
-    var headerCell1 = document.createElement("th");
-    var headerCell2 = document.createElement("th");
-    var headerCell3 = document.createElement("th");
-    var headerCell4 = document.createElement("th");
-    var headerCell5 = document.createElement("th");
-    headerCell0.classList.add("minutes-left");
-    headerCell1.classList.add("actual-departure-time");
-    headerCell2.classList.add("scheduled-departure-time");
-    headerCell3.classList.add("line");
-    headerCell4.classList.add("direction");
-    headerCell5.classList.add("platform");
-    headerRow.appendChild(headerCell0);
-    headerRow.appendChild(headerCell1);
-    headerRow.appendChild(headerCell2);
-    if (show_line) headerRow.appendChild(headerCell3);
-    if (show_direction) headerRow.appendChild(headerCell4);
-    if (show_platform) headerRow.appendChild(headerCell5);
-    headerRow.classList.add("header");
-    tableBody.appendChild(headerRow);
-    table.appendChild(tableBody);
-
-    if (board_type == "dep") {
-      headerCell0.innerHTML = "Dep";
-      headerCell4.innerHTML = "To";
-    } else {
-      headerCell0.innerHTML = "Arr";
-      headerCell4.innerHTML = "From";
-    }
-    headerCell1.innerHTML = "Current";
-    headerCell2.innerHTML = "Time";
-    headerCell3.innerHTML = "Line";
-    headerCell5.innerHTML = "Pt.";
-  }
+  // Leeren Container
+  const container = document.getElementById("tableContainer");
+  container.innerHTML = "";
 
   for (let i = 0; i < num_journeys; i++) {
-    // Get data from JSON
-    const scheduled_departure_time = json_data.journey[i].ti;
-    const actual_departure_time = json_data.journey[i].rt.dlt;
-    const status = json_data.journey[i].rt.status;
-    const line = json_data.journey[i].pr;
-    const direction = json_data.journey[i].st;
-    const platform = json_data.journey[i].tr;
+    const journey = json_data.journey[i];
+    const scheduled_departure_time = journey.ti;
+    const actual_departure_time = journey.rt?.dlt ?? scheduled_departure_time;
+    const arrival_time = journey.rt?.alt || ""; // "alt" = estimated arrival time
+    const direction = journey.st || "";
+    const line = journey.pr || "";
+    const status = journey.rt?.status;
 
-    // Table
-    var dataRow = document.createElement("tr");
-    var dataCell0 = document.createElement("td");
-    var dataCell1 = document.createElement("td");
-    var dataCell2 = document.createElement("td");
-    var dataCell3 = document.createElement("td");
-    var dataCell4 = document.createElement("td");
-    var dataCell5 = document.createElement("td");
-    dataRow.appendChild(dataCell0);
-    dataRow.appendChild(dataCell1);
-    dataRow.appendChild(dataCell2);
-    if (show_line) dataRow.appendChild(dataCell3);
-    dataRow.appendChild(dataCell4);
-    if (show_platform) dataRow.appendChild(dataCell5);
-    dataRow.classList.add("row");
-    dataCell0.classList.add("cell", "minutes-left");
-    dataCell1.classList.add("cell", "actual-departure-time");
-    dataCell2.classList.add("cell", "scheduled-departure-time");
-    dataCell3.classList.add("cell", "line");
-    dataCell4.classList.add("cell", "direction");
-    dataCell5.classList.add("cell", "platform");
-    tableBody.appendChild(dataRow);
-    table.appendChild(tableBody);
+    const row = document.createElement("div");
+    row.className = "journey-row";
 
-    // Check if train is late
-    if (actual_departure_time != undefined) {
-      if (status == "Ausfall") {
-        // Train cancelled
-        dataCell1.innerHTML = "Ausfall";
-        dataCell2.style.textDecoration = "line-through solid";
-        dataCell3.style.textDecoration = "line-through solid";
-        dataCell4.style.textDecoration = "line-through solid";
-        dataCell5.style.textDecoration = "line-through solid";
-        minutes_left = CalculateTimeLeft(scheduled_departure_time);
-      } else {
-        // Train late
-        dataCell1.innerHTML = actual_departure_time;
-        minutes_left = CalculateTimeLeft(actual_departure_time);
-      }
-    } else {
-      // Train on time
-      minutes_left = CalculateTimeLeft(scheduled_departure_time);
-    }
-    dataCell0.innerHTML = minutes_left;
-    dataCell2.innerHTML = scheduled_departure_time;
-    dataCell3.innerHTML = line;
-    dataCell4.innerHTML = direction;
-    dataCell5.innerHTML = platform;
+    const lineDiv = document.createElement("div");
+    lineDiv.className = "line";
+    lineDiv.textContent = line;
+
+    const depDiv = document.createElement("div");
+    depDiv.className = "departure";
+    depDiv.textContent = actual_departure_time;
+
+    const iconDiv = document.createElement("div");
+    iconDiv.className = "icon";
+    const icon = document.createElement("img");
+    icon.src = "img/arrow.svg"; // passe Pfad ggf. an
+    iconDiv.appendChild(icon);
+
+    const arrDiv = document.createElement("div");
+    arrDiv.className = "arrival";
+    arrDiv.textContent = arrival_time;
+
+    const destDiv = document.createElement("div");
+    destDiv.className = "destination";
+    destDiv.textContent = direction;
+
+    row.appendChild(lineDiv);
+    row.appendChild(depDiv);
+    row.appendChild(iconDiv);
+    row.appendChild(arrDiv);
+    row.appendChild(destDiv);
+
+    container.appendChild(row);
   }
-  // Delete old table
-  const myTable = document.getElementById("table");
-  if (myTable != null) myTable.remove();
-  // Add new table
-  document.getElementById("tableContainer").appendChild(table);
+
   loadedFlag = 1;
 }
+
 
 function GetLatestTime() {
   const timestamp = Date.now();
