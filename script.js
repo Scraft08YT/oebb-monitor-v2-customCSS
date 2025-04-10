@@ -271,7 +271,7 @@ function UpdateTable(response) {
     destDiv.textContent = direction;
 
     row.appendChild(lineDiv);
-    row.appendChild(depDiv);
+    //row.appendChild(depDiv);
     row.appendChild(iconDiv);
     row.appendChild(arrDiv);
     row.appendChild(destDiv);
